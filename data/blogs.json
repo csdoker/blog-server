@@ -208,5 +208,11 @@
         "name": "JavaScript基础——语法",
         "date": "2020-02-20",
         "tags": ["JavaScript"]
-    }
+    },
+    {
+        "id": 36,
+        "name": "JavaScript基础——数据类型",
+        "date": "2020-02-22",
+        "tags": ["JavaScript"]
+    },
 ]
