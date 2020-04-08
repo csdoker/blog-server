@@ -17,6 +17,8 @@
 本项目的源码：[源码](https://github.com/csdoker/tiny-wheels)
 关于各个组件的详细使用方式和效果可以查看本项目的文档：[文档](https://csdoker.github.io/tiny-wheels/)
 
+求点赞，求star~(✪ω✪)
+
 
 ## 填坑
 
@@ -47,4 +49,4 @@
 - [ ] 单元测试
 - [ ] TypeScript重构
 
-目前 `Tabs、Collapse、Pager、Carousel` 等四个组件的基本功能已经初步完成了，相关组件的教程文章会陆续发布，敬请期待~
+目前 `Tabs`、`Collapse`、`Pager`、`Carousel` 等四个组件的基本功能已经初步完成了，`Tabs`、`Collapse`以及后续更新组件的教程文章会陆续发布，敬请期待
