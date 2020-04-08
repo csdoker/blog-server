@@ -238,5 +238,11 @@
         "name": "jQuery基础",
         "date": "2020-03-26",
         "tags": ["jQuery"]
+    },
+    {
+        "id": 41,
+        "name": "",
+        "date": "2020-04-08",
+        "tags": ["JavaScript", "Webpack", "Babel", "ES6", "Wheels", "Pager", "Carousel", "轮子", "分页", "轮播", "组件"]
     }
 ]
