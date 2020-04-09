@@ -53,29 +53,29 @@
 要得到上面这种结构，老项目中使用的方法是：
 
 ```javascript
-function showPages (page, total, show) {
-  var str = page + ''
+function showPages(page, total, show) {
+  var str = page + "";
   for (var i = 1; i <= show; i++) {
     if (page - i > 1) {
-      str = page - i + ' ' + str
+      str = page - i + " " + str;
     }
     if (page + i < total) {
-      str = str + ' ' + (page + i)
+      str = str + " " + (page + i);
     }
   }
   if (page - (show + 1) > 1) {
-    str = '... ' + str
+    str = "... " + str;
   }
   if (page > 1) {
-    str = 1 + ' ' + str
+    str = 1 + " " + str;
   }
   if (page + show + 1 < total) {
-    str = str + ' ...'
+    str = str + " ...";
   }
   if (page < total) {
-    str = str + ' ' + total
+    str = str + " " + total;
   }
-  return str
+  return str;
 }
 ```
 
@@ -83,28 +83,28 @@ function showPages (page, total, show) {
 
 ```javascript
 getPager () {
-    const pages = [
-        1,
-        this.pageCount,
-        this.pageCurrent,
-        this.pageCurrent - 1,
-        this.pageCurrent - 2,
-        this.pageCurrent + 1,
-        this.pageCurrent + 2
-    ]
-    const pageNumbers = [
-        ...new Set(
-        pages.filter(n => n >= 1 && n <= this.pageCount).sort((a, b) => a - b)
-        )
-    ]
-    const pageItems = pageNumbers.reduce((items, current, index, array) => {
-        items.push(current)
-        if (array[index + 1] && array[index + 1] - array[index] > 1) {
-            items.push('···')
-        }
-        return items
-    }, [])
-    return pageItems
+  const pages = [
+    1,
+    this.pageCount,
+    this.pageCurrent,
+    this.pageCurrent - 1,
+    this.pageCurrent - 2,
+    this.pageCurrent + 1,
+    this.pageCurrent + 2
+  ]
+  const pageNumbers = [
+    ...new Set(
+      pages.filter(n => n >= 1 && n <= this.pageCount).sort((a, b) => a - b)
+    )
+  ]
+  const pageItems = pageNumbers.reduce((items, current, index, array) => {
+    items.push(current)
+    if (array[index + 1] && array[index + 1] - array[index] > 1) {
+      items.push('···')
+    }
+    return items
+  }, [])
+  return pageItems
 }
 ```
 
@@ -136,19 +136,19 @@ getPager () {
 
 ```javascript
 getCurrentIndex () {
-    return [...this.$$dots].indexOf(
-        this.$container.querySelector('.carousel-dot.active')
-    )
+  return [...this.$$dots].indexOf(
+    this.$container.querySelector('.carousel-dot.active')
+  )
 }
 
 getPrevIndex () {
-    return (
-        (this.getCurrentIndex() - 1 + this.$$dots.length) % this.$$dots.length
-    )
+  return (
+    (this.getCurrentIndex() - 1 + this.$$dots.length) % this.$$dots.length
+  )
 }
 
 getNextIndex () {
-    return (this.getCurrentIndex() + 1) % this.$$dots.length
+  return (this.getCurrentIndex() + 1) % this.$$dots.length
 }
 ```
 
@@ -157,68 +157,70 @@ getNextIndex () {
 
 ```javascript
 setCarouselPanel ($from, $to, direction) {
-    this.isAnimate = true
+  this.isAnimate = true
+  window.requestAnimationFrame(() => {
+    const { fromClass, toClass } = this.resetCarouselPanel($to, direction)
     window.requestAnimationFrame(() => {
-        const { fromClass, toClass } = this.resetCarouselPanel($to, direction)
-        window.requestAnimationFrame(() => {
-        this.moveCarouselPanel(fromClass, toClass, $from, $to)
-        })
+      this.moveCarouselPanel(fromClass, toClass, $from, $to)
     })
+  })
 }
 resetCarouselPanel ($to, direction) {
-    let fromClass = ''
-    let toClass = ''
-    const type = direction === 'left' ? 'next' : 'prev'
-    $to.setAttribute('class', `carousel-panel ${type}`)
-    fromClass = `carousel-panel active ${direction}`
-    toClass = `carousel-panel ${type} ${direction}`
-    return { fromClass, toClass }
+  let fromClass = ''
+  let toClass = ''
+  const type = direction === 'left' ? 'next' : 'prev'
+  $to.setAttribute('class', `carousel-panel ${type}`)
+  fromClass = `carousel-panel active ${direction}`
+  toClass = `carousel-panel ${type} ${direction}`
+  return { fromClass, toClass }
 }
 moveCarouselPanel (fromClass, toClass, $from, $to) {
-    $from.setAttribute('class', fromClass)
-    $to.setAttribute('class', toClass)
-    setTimeout(() => {
-        $from.setAttribute('class', 'carousel-panel')
-        $to.setAttribute('class', 'carousel-panel active')
-        this.isAnimate = false
-    }, this.duration)
+  $from.setAttribute('class', fromClass)
+  $to.setAttribute('class', toClass)
+  setTimeout(() => {
+    $from.setAttribute('class', 'carousel-panel')
+    $to.setAttribute('class', 'carousel-panel active')
+    this.isAnimate = false
+  }, this.duration)
 }
 ```
 
 这里会遇到一个非常难解决的问题，因为我们的思路是先把两个元素的样式给重置，再添加新的样式，所以需要添加两次类名，然后让它们的样式依次作用到对应元素身上，最开始我是这样实现的：
 
 ```javascript
-let fromClass = ''
-let toClass = ''
-const type = direction === 'left' ? 'next' : 'prev'
-$to.setAttribute('class', `carousel-panel ${type}`)
-fromClass = `carousel-panel active ${direction}`
-toClass = `carousel-panel ${type} ${direction}`
+let fromClass = "";
+let toClass = "";
+const type = direction === "left" ? "next" : "prev";
+$to.setAttribute("class", `carousel-panel ${type}`);
+fromClass = `carousel-panel active ${direction}`;
+toClass = `carousel-panel ${type} ${direction}`;
 setTimeout(() => {
-    $from.setAttribute('class', fromClass)
-    $to.setAttribute('class', toClass)
-}, 0)
+  $from.setAttribute("class", fromClass);
+  $to.setAttribute("class", toClass);
+}, 0);
 setTimeout(() => {
-    $from.setAttribute('class', 'carousel-panel')
-    $to.setAttribute('class', 'carousel-panel active')
-    this.isAnimate = false
-}, 400)
+  $from.setAttribute("class", "carousel-panel");
+  $to.setAttribute("class", "carousel-panel active");
+  this.isAnimate = false;
+}, 400);
 ```
 
-第一个`setTimeout`是防止浏览器自动合并样式，第二个`setTimeout`是当动画结束后清除样式，而400ms刚好就是`transition`的时间，乍看上去好像没什么太大的问题，但是实际测试的时候发现会有很多诡异的Bug，检查了很久，最后定位到是第一个`setTimeout`的问题
+第一个`setTimeout`是防止浏览器自动合并样式，第二个`setTimeout`是当动画结束后清除样式，而 400ms 刚好就是`transition`的时间，乍看上去好像没什么太大的问题，但是实际测试的时候发现会有很多诡异的 Bug，检查了很久，最后定位到是第一个`setTimeout`的问题
 
-原因就是使用`setTimeout`并不能100%的确保样式不会被自动合并，在一些很特殊的情况下浏览器仍然会自动合并样式，比如这种需要加载动画的情况，虽然大部分情况下是可行的。具体原理初步猜测和浏览器的渲染机制有关，查阅了很久的资料，先是在`layui`的[源码](https://github.com/sentsin/layui/blob/master/src/lay/modules/carousel.js)中发现了它的处理办法，直接给第一个`setTimeout`的延时设置为50ms，虽然不知道为什么要设置为这个值，但是经过我实际测试后发现确实解决了这个问题，后来继续搜索其他方案，最后还是在`stackoverflow`上找到了靠谱的[解决方案](https://stackoverflow.com/questions/41407861/css-transition-doesnt-animate-when-immediately-changing-size-via-javascript)：
+原因就是使用`setTimeout`并不能 100%的确保样式不会被自动合并，在一些很特殊的情况下浏览器仍然会自动合并样式，比如这种需要加载动画的情况，虽然大部分情况下是可行的。具体原理初步猜测和浏览器的渲染机制有关，查阅了很久的资料，先是在`layui`的[源码](https://github.com/sentsin/layui/blob/master/src/lay/modules/carousel.js)中发现了它的处理办法，直接给第一个`setTimeout`的延时设置为 50ms，虽然不知道为什么要设置为这个值，但是经过我实际测试后发现确实解决了这个问题（个人认为这种办法还是不能 100%保证在所有情况下都能防止样式合并），后来我又查阅了一些其他的资料，最后还是在`stackoverflow`上找到了最靠谱的[解决方案](https://stackoverflow.com/questions/41407861/css-transition-doesnt-animate-when-immediately-changing-size-via-javascript)：
 
 ```javascript
-window.requestAnimationFrame(function(){
-document.getElementById("two").setAttribute("style", "height: 0px");
- window.requestAnimationFrame(function(){
+window.requestAnimationFrame(function () {
+  document.getElementById("two").setAttribute("style", "height: 0px");
+  window.requestAnimationFrame(function () {
     document.getElementById("two").setAttribute("style", "height:  200px");
   });
 });
 ```
 
-使用了两次requestAnimationFrame方法，把改变样式的代码放入其中依次执行，经过我在多种浏览器上测试后，发现这种方案明显比`setTimeout`的办法更稳定可靠，所以最终我采用了这种办法处理浏览器自动合并样式的问题，具体的一些原因可以参考这个`stackoverflow`帖子里的答案
+使用了两次 requestAnimationFrame 方法，把改变样式的代码放入其中依次执行，经过我在多种浏览器上测试后，发现这种方案明显比`setTimeout`的办法更稳定可靠，所以最终我采用了这种办法处理浏览器自动合并样式的问题，具体的一些原因可以参考这个`stackoverflow`帖子里的答案
+
+使用这种办法做轮播动画，还有个好处，就是非常利于拓展功能，比如要把轮播面板的`slide`滑动效果改成`fade`淡入淡出的效果，只需要把对应类的样式从`transfrom`的变化改成`opacity`的变化即可，事实上，一些成熟的 UI 框架也是用类似的思想实现的（如果用以前的动画算法，就只能单独写一个动画模块了，对后期的维护与拓展很不友好）
 
 如果大家有更完美的避免样式合并的办法，或者更优雅高效的轮播算法，也欢迎分享给我~
 
