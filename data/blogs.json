@@ -244,5 +244,11 @@
         "name": "手把手教你用原生JavaScript造轮子（三）——项目升级&填坑&重写组件",
         "date": "2020-04-08",
         "tags": ["JavaScript", "Webpack", "Babel", "ES6", "Wheels", "Pager", "Carousel", "轮子", "分页", "轮播", "组件"]
+    },
+    {
+        "id": 42,
+        "name": "手把手教你用原生JavaScript造轮子（四）——Tabs选项卡",
+        "date": "2020-04-10",
+        "tags": ["JavaScript", "Webpack", "Babel", "ES6", "Wheels", "Tabs", "轮子", "组件"]
     }
 ]
