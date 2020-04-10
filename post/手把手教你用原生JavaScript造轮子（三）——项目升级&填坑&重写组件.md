@@ -113,7 +113,7 @@ getPager () {
 
 #### Carousel
 
-![Carousel](https://i.loli.net/2020/04/08/2FWUqQsVGbrPXlx.gif)
+![Carousel](https://i.loli.net/2020/04/10/zFUl4P7tifgQDkR.gif)
 
 老项目中轮播组件的实现思路大概是这样的：
 
