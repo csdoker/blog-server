@@ -226,6 +226,47 @@ window.requestAnimationFrame(function () {
 
 关于分页和轮播组件的填坑差不多就这些了，基本功能都实现了，效果经过初步测试也没有太大的问题，一些更复杂的功能会在后续的更新里添加进去
 
+## 更新（2020-04-12，修复一个“小”问题）
+
+在截取 Carousel 组件的动态图的时候，发现了一个很隐蔽的 Bug：
+![Bug1](https://i.loli.net/2020/04/12/T3Pb5yN1KcInE2F.png)
+
+WTF？！为什么两个`carousel-panel`之间出现了一条很细的线，明明是它们是同步做的移动，按道理来说不应该呀，然后我写了个[demo](https://jsbin.com/gijabuseca/edit?html,css,js,output)验证这个问题，发现果然也出现了同样的问题：
+![Bug2](https://i.loli.net/2020/04/12/nk8qCYuBx7dbGTf.png)
+
+看样子，只要是两个一起做 transform 移动的元素，都会出现这个渲染 Bug，经过测试，发现貌似只有 Chrome 上会出现这个问题，Edge、Firefox、Safari 都是正常的，也就是说，这算是一个浏览器的 Bug，我在 stackoverflow、segmentfault 上也提出了相关的问题：
+[when-two-elements-use-transform-to-move-at-the-same-time-why-there-is-a-gap-in](https://stackoverflow.com/questions/61141499/when-two-elements-use-transform-to-move-at-the-same-time-why-there-is-a-gap-in)
+[两个元素同时用 transform 做位移动画时，中间出现空隙，是浏览器的 BUG 吗](https://segmentfault.com/q/1010000022334636)
+
+此路不通，只能另寻他路，思考了很久以后，我发现了一个可以规避这个 Bug 的动画方案：
+
+```javascript
+setCarouselPanel ($from, $to, direction) {
+  this.isAnimate = true
+  this.resetCarouselPanel($to, direction)
+  this.moveCarouselPanel(direction, $from, $to)
+}
+
+resetCarouselPanel ($to, direction) {
+  const type = direction === 'left' ? 'next' : 'prev'
+  $to.setAttribute('class', `carousel-panel ${type}`)
+  this.$panelContainer.classList.add(`${direction}`)
+}
+
+moveCarouselPanel (direction, $from, $to) {
+  setTimeout(() => {
+    $from.setAttribute('class', 'carousel-panel')
+    $to.setAttribute('class', 'carousel-panel active')
+    this.$panelContainer.classList.remove(`${direction}`)
+    this.isAnimate = false
+  }, this.duration)
+}
+```
+
+代码中是直接在`carousel-panel`的父级容器上做的移动操作，这样不仅可以完全解决这个渲染问题，连`requestAnimationFrame`的操作也省去了，可以说是非常完美的做法了
+
+> 后续我又测试了很多次，基本没有发现其他问题，现在的轮播感觉才算是达到一个较为“稳定”的版本了，如果你发现了其他问题，欢迎给我提 issue
+
 ## 进度
 
 - [x] Tabs-选项卡
