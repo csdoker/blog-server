@@ -250,5 +250,11 @@
         "name": "手把手教你用原生JavaScript造轮子（四）——Tabs选项卡",
         "date": "2020-04-10",
         "tags": ["JavaScript", "Webpack", "Babel", "ES6", "Wheels", "Tabs", "轮子", "组件"]
+    },
+    {
+        "id": 43,
+        "name": "浅析MVC、EventBus、表驱动编程、模块化",
+        "date": "2020-04-23",
+        "tags": ["MVC", "EventBus", "模块化"]
     }
 ]
