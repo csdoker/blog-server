@@ -262,5 +262,11 @@
         "name": "手把手教你用原生JavaScript造轮子（五）——Collapse折叠面板",
         "date": "2020-04-23",
         "tags": ["JavaScript", "Webpack", "Babel", "ES6", "Wheels", "Collapse", "轮子", "组件"]
+    },
+    {
+        "id": 45,
+        "name": "手把手教你用原生JavaScript造轮子（六）——Tree树形控件",
+        "date": "2020-04-23",
+        "tags": ["JavaScript", "Webpack", "Babel", "ES6", "Wheels", "Tree", "轮子", "组件"]
     }
 ]
